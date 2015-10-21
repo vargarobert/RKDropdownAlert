@@ -13,8 +13,8 @@ NSString *const RKDropdownAlertDismissAllNotification = @"RKDropdownAlertDismiss
 
 //%%% CUSTOMIZE FOR DEFAULT SETTINGS
 // These values specify what the view will look like
-static int HEIGHT = 90; //height of the alert view
-static float ANIMATION_TIME = .3; //time it takes for the animation to complete in seconds
+static int HEIGHT = 30; //height of the alert view
+static float ANIMATION_TIME = .6; //time it takes for the animation to complete in seconds
 static int X_BUFFER = 10; //buffer distance on each side for the text
 static int Y_BUFFER = 10; //buffer distance on top/bottom for the text
 static int TIME = 3; //default time in seconds before the view is hidden
@@ -54,7 +54,7 @@ NSString *DEFAULT_TITLE;
         
         //%%% title setup (the bolded text at the top of the view)
         titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(X_BUFFER, STATUS_BAR_HEIGHT, frame.size.width-2*X_BUFFER, 30)];
-        [titleLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:FONT_SIZE]];
+        [titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE weight:UIFontWeightSemibold]];
         titleLabel.textColor = defaultTextColor;
         titleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:titleLabel];
@@ -107,7 +107,7 @@ NSString *DEFAULT_TITLE;
     if (alertView) {
         [UIView animateWithDuration:ANIMATION_TIME animations:^{
             CGRect frame = alertView.frame;
-            frame.origin.y = -HEIGHT;
+            frame.origin.y = [[UIScreen mainScreen]bounds].size.height;
             alertView.frame = frame;
         }];
         [self performSelector:@selector(removeView:) withObject:alertView afterDelay:ANIMATION_TIME];
@@ -132,13 +132,13 @@ NSString *DEFAULT_TITLE;
 //%%% these are necessary methods that call each other depending on which method you call. Generally shouldn't edit these unless you know what you're doing
 
 +(RKDropdownAlert*)alertView {
-    RKDropdownAlert *alert = [[self alloc]initWithFrame:CGRectMake(0, -HEIGHT, [[UIScreen mainScreen]bounds].size.width, HEIGHT)];
+    RKDropdownAlert *alert = [[self alloc]initWithFrame:CGRectMake(0, [[UIScreen mainScreen]bounds].size.height+HEIGHT, [[UIScreen mainScreen]bounds].size.width, HEIGHT)];
     return alert;
 }
 
 +(RKDropdownAlert*)alertViewWithDelegate:(id<RKDropdownAlertDelegate>)delegate
 {
-    RKDropdownAlert *alert = [[self alloc]initWithFrame:CGRectMake(0, -HEIGHT, [[UIScreen mainScreen]bounds].size.width, HEIGHT)];
+    RKDropdownAlert *alert = [[self alloc]initWithFrame:CGRectMake(0, [[UIScreen mainScreen]bounds].size.height+HEIGHT, [[UIScreen mainScreen]bounds].size.width, HEIGHT)];
     alert.delegate = delegate;
     return alert;
 }
@@ -245,7 +245,7 @@ NSString *DEFAULT_TITLE;
     NSInteger time = seconds;
     titleLabel.text = title;
     
-    if (message && message.length > 0) {
+    if (message) {
         messageLabel.text = message;
         if ([self messageTextIsOneLine]) {
             CGRect frame = titleLabel.frame;
@@ -254,7 +254,7 @@ NSString *DEFAULT_TITLE;
         }
     } else {
         CGRect frame = titleLabel.frame;
-        frame.size.height = HEIGHT-2*Y_BUFFER-STATUS_BAR_HEIGHT;
+        frame.size.height = (-HEIGHT-STATUS_BAR_HEIGHT-Y_BUFFER)/2;//HEIGHT-2*Y_BUFFER-STATUS_BAR_HEIGHT;
         frame.origin.y = Y_BUFFER+STATUS_BAR_HEIGHT;
         titleLabel.frame = frame;
     }
@@ -285,7 +285,7 @@ NSString *DEFAULT_TITLE;
     
     [UIView animateWithDuration:ANIMATION_TIME animations:^{
         CGRect frame = self.frame;
-        frame.origin.y = 0;
+        frame.origin.y = [[UIScreen mainScreen]bounds].size.height-HEIGHT;
         self.frame = frame;
     }];
     
