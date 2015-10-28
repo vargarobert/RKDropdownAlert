@@ -17,7 +17,7 @@ static int HEIGHT = 30; //height of the alert view
 static float ANIMATION_TIME = .6; //time it takes for the animation to complete in seconds
 static int X_BUFFER = 10; //buffer distance on each side for the text
 static int Y_BUFFER = 10; //buffer distance on top/bottom for the text
-static int TIME = 3; //default time in seconds before the view is hidden
+static int TIME = 99999999; //default time in seconds before the view is hidden
 static int STATUS_BAR_HEIGHT = 20;
 static int FONT_SIZE = 14;
 NSString *DEFAULT_TITLE;
@@ -37,7 +37,7 @@ NSString *DEFAULT_TITLE;
 -(void)setupDefaultAttributes
 {
     defaultViewColor = [UIColor colorWithRed:0.98 green:0.66 blue:0.2 alpha:1];//%%% default color from slingshot
-    
+
     defaultTextColor = [UIColor whiteColor];
     DEFAULT_TITLE = @"Default Text Here"; //%%% this text can only be edited if you do not use the pod solution. check the repo's README for more information
     
@@ -68,7 +68,7 @@ NSString *DEFAULT_TITLE;
         messageLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:messageLabel];
         
-        [self addTarget:self action:@selector(hideView:) forControlEvents:UIControlEventTouchUpInside];
+//        [self addTarget:self action:@selector(hideView:) forControlEvents:UIControlEventTouchUpInside];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(dismissAlertView)
