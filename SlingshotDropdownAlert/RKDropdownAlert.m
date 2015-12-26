@@ -131,6 +131,10 @@ NSString *DEFAULT_TITLE;
 
 //%%% these are necessary methods that call each other depending on which method you call. Generally shouldn't edit these unless you know what you're doing
 
++(BOOL)isShowing {
+    return self.isShowing;
+}
+
 +(RKDropdownAlert*)alertView {
     RKDropdownAlert *alert = [[self alloc]initWithFrame:CGRectMake(0, [[UIScreen mainScreen]bounds].size.height+HEIGHT, [[UIScreen mainScreen]bounds].size.width, HEIGHT)];
     return alert;
