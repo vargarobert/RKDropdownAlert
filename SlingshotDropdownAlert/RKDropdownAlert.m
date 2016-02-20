@@ -68,7 +68,7 @@ NSString *DEFAULT_TITLE;
         messageLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:messageLabel];
         
-//        [self addTarget:self action:@selector(hideView:) forControlEvents:UIControlEventTouchUpInside];
+        [self addTarget:self action:@selector(hideView:) forControlEvents:UIControlEventTouchUpInside];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(dismissAlertView)
